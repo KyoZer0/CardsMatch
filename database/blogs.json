@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Why Triple Match Games Are the Perfect Cozy Break",
+        "slug": "why-triple-match-games-are-the-perfect-cozy-break",
+        "excerpt": "Discover how the simple act of matching three tiles can help you reset your focus and reduce anxiety during a busy day.",
+        "published_at": "2026-03-01",
+        "reading_time": "3 min read",
+        "body": "<h2>The Rise of Simple Solitaire Puzzle Mechanics</h2>\n<p>Triple match puzzle games have exploded in popularity because they hit the absolute sweet spot of cognitive load. You aren't managing complex inventories or racing a ticking clock. Instead, you are systematically organizing chaos into order by finding three matching icons.</p>\n<p>Cards Match leans into this entirely. By giving players a 7-slot tray, the game naturally introduces a light element of strategy without feeling punishing. You can confidently click away top layers, knowing you have a tiny bit of breathing room to find the pieces you need.</p>\n<p>Taking a five-minute break to clear a board acts as a fantastic palate cleanser for your brain between intense work tasks.</p>"
+    },
+    {
+        "title": "5 Tips for Mastering Cards Match Levels",
+        "slug": "5-tips-for-mastering-cards-match-levels",
+        "excerpt": "Learn how to read the 3D tile stacks and plan your tray space to conquer the hardest puzzle layouts.",
+        "published_at": "2026-03-05",
+        "reading_time": "4 min read",
+        "body": "<h2>Conquering the Stack</h2>\n<p>When you reach level 5 and beyond in Cards Match, the board becomes incredibly dense. Here are a few tricks to help you clear it:</p>\n<ol>\n  <li><strong>Peek at the Edges:</strong> Because tiles are stacked on half-steps, you can often see the bottom corner of a tile buried underneath. Use these clues to figure out if digging into a stack is worth it.</li>\n  <li><strong>Keep Your Tray Clean:</strong> Never let your tray exceed 4 un-matched tiles if you can help it. Once you hit 5 slots used, your options for clearing the board drop drastically.</li>\n  <li><strong>Target the Tallest Pillars:</strong> It's tempting to pick off the easy outliers on the edges of the board, but the tallest center stacks hide the most tiles. Work on dismantling the biggest towers first!</li>\n  <li><strong>Check the Shadows:</strong> The 3D physical block styling makes it easy to read depth. Tiles with the thickest drop shadows are sitting at the very top of the pile.</li>\n</ol>\n<p>Remember, there is no timer in Cards Match. You have all the time in the world to survey the board before making your next move.</p>"
+    },
+    {
+        "title": "Designing a Pixel-Art Cafe Aesthetic for Browser Games",
+        "slug": "designing-a-pixel-art-cafe-aesthetic-for-browser-games",
+        "excerpt": "A deep dive into why we chose warm coffee browns, thick borders, and pixel fonts to create a cozy game UI.",
+        "published_at": "2026-03-07",
+        "reading_time": "5 min read",
+        "body": "<h2>Moving Away from Generic UI</h2>\n<p>When building the interface for Cards Match, we wanted players to feel like they had just sat down at a quiet corner table in an indie coffee shop. The visual design needed to reflect the relaxing, low-stakes nature of a tile-matching puzzle.</p>\n<p>We achieved this by heavily incorporating a parchment beige background alongside thick, dark-rost coffee brown borders. By using the <strong>Pixelify Sans</strong> font, we evoke a sense of nostalgia reminiscent of classic Gameboy or SNES adventures, but with the crisp responsiveness of a modern web application.</p>\n<p>The tiles themselves are rendered to look like satisfying, physical wooden blocks with bright white tops and an inset orange framing. Every time you click a tile, it physically compresses downwards, giving fantastic tactile feedback that makes clearing the board immensely satisfying.</p>"
+    }
+]
