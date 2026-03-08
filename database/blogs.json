@@ -21,6 +21,109 @@
         "excerpt": "A deep dive into why we chose warm coffee browns, thick borders, and pixel fonts to create a cozy game UI.",
         "published_at": "2026-03-07",
         "reading_time": "5 min read",
+    },
+    {
+        "title": "Why Triple Match Games Are the Perfect Cozy Break",
+        "slug": "why-triple-match-games-are-the-perfect-cozy-break",
+        "excerpt": "Discover how the simple act of matching three tiles can help you reset your focus and reduce anxiety during a busy day.",
+        "published_at": "2026-03-01",
+        "reading_time": "3 min read",
+        "body": "<h2>The Rise of Simple Solitaire Puzzle Mechanics</h2>\n<p>Triple match puzzle games have exploded in popularity because they hit the absolute sweet spot of cognitive load. You aren't managing complex inventories or racing a ticking clock. Instead, you are systematically organizing chaos into order by finding three matching icons.</p>\n<p>Cards Match leans into this entirely. By giving players a 7-slot tray, the game naturally introduces a light element of strategy without feeling punishing. You can confidently click away top layers, knowing you have a tiny bit of breathing room to find the pieces you need.</p>\n<p>Taking a five-minute break to clear a board acts as a fantastic palate cleanser for your brain between intense work tasks.</p>"
+    },
+    {
+        "title": "5 Tips for Mastering Cards Match Levels",
+        "slug": "5-tips-for-mastering-cards-match-levels",
+        "excerpt": "Learn how to read the 3D tile stacks and plan your tray space to conquer the hardest puzzle layouts.",
+        "published_at": "2026-03-05",
+        "reading_time": "4 min read",
+        "body": "<h2>Conquering the Stack</h2>\n<p>When you reach level 5 and beyond in Cards Match, the board becomes incredibly dense. Here are a few tricks to help you clear it:</p>\n<ol>\n  <li><strong>Peek at the Edges:</strong> Because tiles are stacked on half-steps, you can often see the bottom corner of a tile buried underneath. Use these clues to figure out if digging into a stack is worth it.</li>\n  <li><strong>Keep Your Tray Clean:</strong> Never let your tray exceed 4 un-matched tiles if you can help it. Once you hit 5 slots used, your options for clearing the board drop drastically.</li>\n  <li><strong>Target the Tallest Pillars:</strong> It's tempting to pick off the easy outliers on the edges of the board, but the tallest center stacks hide the most tiles. Work on dismantling the biggest towers first!</li>\n  <li><strong>Check the Shadows:</strong> The 3D physical block styling makes it easy to read depth. Tiles with the thickest drop shadows are sitting at the very top of the pile.</li>\n</ol>\n<p>Remember, there is no timer in Cards Match. You have all the time in the world to survey the board before making your next move.</p>"
+    },
+    {
+        "title": "Designing a Pixel-Art Cafe Aesthetic for Browser Games",
+        "slug": "designing-a-pixel-art-cafe-aesthetic-for-browser-games",
+        "excerpt": "A deep dive into why we chose warm coffee browns, thick borders, and pixel fonts to create a cozy game UI.",
+        "published_at": "2026-03-07",
+        "reading_time": "5 min read",
         "body": "<h2>Moving Away from Generic UI</h2>\n<p>When building the interface for Cards Match, we wanted players to feel like they had just sat down at a quiet corner table in an indie coffee shop. The visual design needed to reflect the relaxing, low-stakes nature of a tile-matching puzzle.</p>\n<p>We achieved this by heavily incorporating a parchment beige background alongside thick, dark-rost coffee brown borders. By using the <strong>Pixelify Sans</strong> font, we evoke a sense of nostalgia reminiscent of classic Gameboy or SNES adventures, but with the crisp responsiveness of a modern web application.</p>\n<p>The tiles themselves are rendered to look like satisfying, physical wooden blocks with bright white tops and an inset orange framing. Every time you click a tile, it physically compresses downwards, giving fantastic tactile feedback that makes clearing the board immensely satisfying.</p>"
+    },
+    {
+        "title": "The Psychology Behind Tile Matching Games",
+        "slug": "psychology-behind-tile-matching",
+        "excerpt": "Explore why the human brain loves seeking patterns and how tile-matching taps into our deep-seated need for organization.",
+        "published_at": "2026-03-08",
+        "reading_time": "6 min read",
+        "body": "<h2>Why We Crave Order</h2>\n<p>Our brains are wired for pattern recognition. From an evolutionary standpoint, identifying similarities and organizing our environment helped us survive. Today, games like Cards Match tap directly into that ancient reward system. When you spot three matching tiles and clear them from the board, your brain releases a tiny hit of dopamine.</p>\n<p>This \"dopamine drip\" is what makes these simple puzzles so captivating. Unlike action games that rely on adrenaline, tile matching provides a steady, calming stream of micro-rewards. It's the digital equivalent of organizing a messy desk—you're turning chaos into order, one move at a time.</p>"
+    },
+    {
+        "title": "Unwinding with Cards Match: A Guide to Stress Relief",
+        "slug": "unwinding-with-cards-match-stress-relief",
+        "excerpt": "Practical ways to incorporate short gaming sessions into your daily routine to combat burnout and reduce stress.",
+        "published_at": "2026-03-08",
+        "reading_time": "4 min read",
+        "body": "<h2>The Micro-Break Strategy</h2>\n<p>We've all been there: staring at a screen, completely blocked on a task, feeling the stress mount. While scrolling social media might seem like a break, it often just adds more noise. This is where a game like Cards Match shines.</p>\n<p>By stepping away from your main work and focusing entirely on a low-stakes, visual-spatial puzzle, you give your brain's language and logic centers a chance to rest. The tactile \"clack\" of the tiles and the satisfaction of clearing layers act as a meditative focal point. Next time you hit a wall, try a five-minute Cards Match session instead of reaching for your phone.</p>"
+    },
+    {
+        "title": "From Solitaire to Mahjong: The Evolution of Tile Games",
+        "slug": "evolution-of-tile-games-solitaire-mahjong",
+        "excerpt": "A brief history of how ancient physical tile games evolved into the modern digital puzzle experiences we enjoy today.",
+        "published_at": "2026-03-09",
+        "reading_time": "7 min read",
+        "body": "<h2>A Lineage of Strategy</h2>\n<p>While Cards Match feels distinctly modern, its roots trace back centuries. The mechanic of clearing matching sets from a beautifully stacked arrangement is heavily inspired by Mahjong Solitaire, which itself was a single-player adaptation of the traditional Chinese multiplayer game.</p>\n<p>The transition from heavy ivory and bamboo tiles to colorful digital icons hasn't changed the core appeal. What digital versions like Cards Match add is accessibility, endless variety, and physics-based interactions that physical tiles could never replicate. We are participating in a tradition of puzzle-solving that spans generations.</p>"
+    },
+    {
+        "title": "How to Build a High Score Strategy in Match 3",
+        "slug": "high-score-strategy-match-3-games",
+        "excerpt": "Advanced tactics to maximize your points and maintain long combo streaks in tile matching puzzles.",
+        "published_at": "2026-03-09",
+        "reading_time": "5 min read",
+        "body": "<h2>Beyond Basic Matching</h2>\n<p>If you're looking to push your Cards Match score to the limit, casually picking obvious pairs won't cut it. You need to think three moves ahead.</p>\n<p>The key to high scoring is combo maintenance. Instead of immediately completing a match when you see three tiles, consider holding two in your tray while you uncover related tiles deeper in the stack. By setting up consecutive matches, you can trigger massive combo multipliers. It requires managing your 7-slot tray carefully, but the payoff is worth the risk.</p>"
+    },
+    {
+        "title": "The Art of the Shuffle: Dealing with Dead Ends",
+        "slug": "art-of-the-shuffle-handling-dead-ends",
+        "excerpt": "What to do when the board seems impossible and how to use your limited power-ups effectively.",
+        "published_at": "2026-03-10",
+        "reading_time": "4 min read",
+        "body": "<h2>Embracing the Block</h2>\n<p>Getting stuck is part of the puzzle experience. You've loaded your tray with five mismatched tiles, and you can't see the pairs you need anywhere on the top layer. Panic sets in.</p>\n<p>The first rule: don't randomly click. Take a breath and trace the layers. Sometimes, sacrificing a slot to uncover a buried tile is the only way forward. If you have a 'Shuffle' or 'Undo' power-up (if the game provides them), use them strategically—not when you are merely frustrated, but when you have mathematically proven there are no moves left on the visible layer.</p>"
+    },
+    {
+        "title": "Cards Match vs. Traditional Desktop Games",
+        "slug": "cards-match-vs-traditional-desktop-games",
+        "excerpt": "Why modern browser-based puzzles are replacing the classic games that used to come pre-installed on your computer.",
+        "published_at": "2026-03-10",
+        "reading_time": "6 min read",
+        "body": "<h2>The New Minesweeper</h2>\n<p>For decades, games like Solitaire and Minesweeper were the undisputed kings of the quick office break, simply because they were there. But as the web evolved, so did our expectations for casual gaming.</p>\n<p>Browser-based games like Cards Match offer richer graphics, cloud saving, and cross-device compatibility without needing a download. They represent the next generation of 'pre-installed' entertainment—accessible anywhere you have an internet connection, perfectly scaled for everything from a giant monitor to your mobile phone.</p>"
+    },
+    {
+        "title": "Color Theory in Casual Game Design",
+        "slug": "color-theory-in-casual-game-design",
+        "excerpt": "An analysis of how color palettes affect player mood and retention in relaxed puzzle environments.",
+        "published_at": "2026-03-11",
+        "reading_time": "5 min read",
+        "body": "<h2>Painting with Purpose</h2>\n<p>Have you ever noticed that the most stressful games use stark reds, blacks, and high-contrast neons, while casual games prefer pastels and earthy tones? This is entirely intentional.</p>\n<p>In Cards Match, the soft beige (`--bg-card-inner`) and warm wood colors (`--wood-dark`) are chosen to lower blood pressure and signal that this is a safe, relaxed space. Pops of accent colors (cyan, green, yellow) are reserved for positive reinforcement—like completing a match or leveling up. The color palette literally guides your emotional response to the game.</p>"
+    },
+    {
+        "title": "The Future of Browser Puzzle Games",
+        "slug": "future-of-browser-puzzle-games",
+        "excerpt": "What web technologies like WebGL and WASM mean for the next generation of online casual games.",
+        "published_at": "2026-03-11",
+        "reading_time": "5 min read",
+        "body": "<h2>Beyond the DOM</h2>\n<p>Currently, games like Cards Match use HTML and CSS to render their beautiful, responsive boards. But as web technologies advance, the possibilities for casual games are expanding rapidly.</p>\n<p>With tools like WebGL and WebAssembly (WASM), we are starting to see browser games that rival native mobile apps in performance and visual fidelity. Imagine Cards Match with real-time 3D lighting, physics-based tile cascading, and dynamic environments—all loading instantly in a tab. The casual web game renaissance is just beginning.</p>"
+    },
+    {
+        "title": "Why We Added 3D Depth to a 2D Game",
+        "slug": "adding-3d-depth-to-2d-games",
+        "excerpt": "The technical and design challenges of making flat CSS tiles feel like physical objects you can touch.",
+        "published_at": "2026-03-12",
+        "reading_time": "6 min read",
+        "body": "<h2>Faking the Third Dimension</h2>\n<p>Creating the illusion of depth in a purely 2D DOM environment requires a lot of CSS trickery. In Cards Match, the 'thickness' of the tiles is actually achieved using precise `box-shadow` layering and `transform: translateY` animations.</p>\n<p>This pseudo-3D effect isn't just for looks; it serves a crucial gameplay purpose. The drop shadows help players instantly understand the visual hierarchy of the stack. You intuitively know which tile is on top because your brain interprets the shadows as physical height. It's a perfect example of design serving function.</p>"
+    },
+    {
+        "title": "Hosting a Cards Match Tournament in Your Office",
+        "slug": "hosting-cards-match-tournament",
+        "excerpt": "Fun ideas for using casual puzzle games as low-stress team-building activities.",
+        "published_at": "2026-03-12",
+        "reading_time": "3 min read",
+        "body": "<h2>Friendly Competition</h2>\n<p>Team building doesn't always have to involve trust falls or escape rooms. Sometimes, a casual high-score leaderboard on a Friday afternoon is all you need to boost morale.</p>\n<p>Setting up a Cards Match tournament is incredibly easy since it runs in the browser. Have everyone start at Level 1 simultaneously, and see who can reach the highest score in 15 minutes. It's accessible to non-gamers, delightfully low-stakes, and provides a great excuse to take a collective screen break.</p>"
     }
 ]

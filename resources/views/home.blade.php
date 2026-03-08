@@ -4,8 +4,8 @@
 @section('meta_description', 'Play Cards Match, a free online triple match puzzle game. Tap tiles, match 3 identical cards, and clear the board in a cozy, relaxing browser experience. No download needed.')
 
 @section('hero')
-    <div class="game-iframe-wrapper" style="position: relative; width: 100%; max-width: 800px; margin: 0 auto; aspect-ratio: 9/16; max-height: 80vh;">
-        <iframe src="{{ asset('game/index.html') }}" title="Cards Match Game Board" frameborder="0" scrolling="no" style="position: absolute; top:0; left:0; width: 100%; height: 100%; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); background: #DCE8D2;"></iframe>
+    <div class="game-iframe-wrapper">
+        <iframe src="{{ asset('game/index.html') }}" title="Cards Match Game Board" frameborder="0" scrolling="no"></iframe>
     </div>
 @endsection
 

@@ -53,6 +53,17 @@ export class GameCore {
 
     startLevel() {
         this.boardArea.innerHTML = '';
+        this.boardInner = document.createElement('div');
+        this.boardInner.className = 'board-inner';
+        this.boardInner.style.position = 'absolute';
+        this.boardInner.style.top = '0';
+        this.boardInner.style.left = '0';
+        this.boardInner.style.width = '100%';
+        this.boardInner.style.height = '100%';
+        this.boardInner.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+        this.boardInner.style.transformOrigin = 'center';
+        this.boardArea.appendChild(this.boardInner);
+
         this.tiles = [];
         this.selectedTiles = [];
         this.hideModal();
@@ -64,7 +75,7 @@ export class GameCore {
         this.generateLevelData();
         this.calculateBlockages();
         
-        this.tiles.forEach(tile => tile.createDOM(this.boardArea, (t) => this.handleTileClick(t)));
+        this.tiles.forEach(tile => tile.createDOM(this.boardInner, (t) => this.handleTileClick(t)));
         this.centerBoard();
     }
 
@@ -156,13 +167,34 @@ export class GameCore {
             }
         });
 
+        if (minX === Infinity) return;
+
         const logicalWidth = ((maxX - minX) + 1) * 60;
         const logicalHeight = ((maxY - minY) + 1) * 60;
         
-        const boardRect = this.boardArea.getBoundingClientRect();
+        const boardWidth = this.boardArea.offsetWidth;
+        const boardHeight = this.boardArea.offsetHeight;
         
-        const offsetX = (boardRect.width - logicalWidth) / 2 - (minX * 60);
-        const offsetY = (boardRect.height - logicalHeight) / 2 - (minY * 60);
+        // Calculate max scale based on how deep the layers go to keep them from clipping out.
+        // Assuming every Z level shifts elements up by 10px.
+        const maxZ = this.tiles.reduce((max, t) => t.state === 'board' ? Math.max(max, t.z) : max, 0);
+        const extraVerticalSpace = maxZ * 10;
+        
+        const totalHeightNeeded = logicalHeight + extraVerticalSpace;
+        
+        const scaleX = (boardWidth - 20) / logicalWidth; // 20px padding minimum
+        const scaleY = (boardHeight - 20) / totalHeightNeeded;
+        
+        // Default scale is 1, but we zoom out if bounds exceed the container area
+        let targetScale = Math.min(1, scaleX, scaleY);
+        
+        if (this.boardInner) {
+            this.boardInner.style.transform = `scale(${targetScale})`;
+        }
+        
+        // Since we scale the container, offsets need not to be scaled manually.
+        const offsetX = (boardWidth / targetScale - logicalWidth) / 2 - (minX * 60);
+        const offsetY = ((boardHeight / targetScale - totalHeightNeeded) / 2) + extraVerticalSpace - (minY * 60);
 
         this.tiles.forEach(t => {
             if (t.state === 'board') {
@@ -182,6 +214,17 @@ export class GameCore {
         tile.state = 'moving';
         this.selectedTiles.push(tile);
         
+        const rect = tile.element.getBoundingClientRect();
+        const boardRect = this.boardArea.getBoundingClientRect();
+
+        this.boardArea.appendChild(tile.element);
+        
+        tile.element.style.transition = 'none';
+        tile.element.style.left = `${rect.left - boardRect.left}px`;
+        tile.element.style.top = `${rect.top - boardRect.top}px`;
+        tile.element.offsetHeight; // force reflow
+        tile.element.style.transition = 'transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease, top 0.3s ease, left 0.3s ease';
+
         this.tiles.forEach(t => {
             const index = t.blockedBy.indexOf(tile);
             if (index > -1) {
@@ -192,6 +235,8 @@ export class GameCore {
 
         this.sortSelectionBar();
         this.renderSelectionBar();
+        this.centerBoard(); // Recalculate zoom bounding box
+        
         setTimeout(() => this.checkForMatch(), 300);
     }
 
@@ -231,13 +276,19 @@ export class GameCore {
             const matchedTiles = this.selectedTiles.splice(matchIndex, 3);
             this.updateScore(30); // 30 points per match
             
+            this.playMatchSfx();
+            
             matchedTiles.forEach(t => {
                 t.state = 'matched';
                 t.element.classList.add('removing');
+                // Create particles
+                this.createParticles(t.element);
                 setTimeout(() => t.element.remove(), 300);
             });
 
-            setTimeout(() => this.renderSelectionBar(), 150);
+            setTimeout(() => {
+                this.renderSelectionBar();
+            }, 150);
         }
 
         setTimeout(() => this.checkGameState(), 400);
@@ -282,6 +333,67 @@ export class GameCore {
         } else {
             // Restart game entirely
             this.startGame();
+        }
+    }
+    
+    // VFX & SFX Support Methods
+    createParticles(targetElement) {
+        const rect = targetElement.getBoundingClientRect();
+        const center = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
+
+        for (let i = 0; i < 10; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            // Random properties for explosion direction
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 20 + Math.random() * 30; // 20 to 50px speed 
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.left = `${center.x}px`;
+            particle.style.top = `${center.y}px`;
+            
+            // Random colors based on main tile color palette
+            const colors = ['#FF7A59', '#FFFFFF', '#D3AD81', '#A8704A'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 600);
+        }
+    }
+    
+    playMatchSfx() {
+        // Implement simple synthetic beep or hook audio elements here.
+        // For now, if no actual audio files exist, we can use a small AudioContext pop.
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if(!AudioContext) return;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            
+            osc.start();
+            osc.stop(ctx.currentTime + 0.1);
+        } catch (e) {
+            console.log('Audio disabled or unsupported.', e);
         }
     }
 }

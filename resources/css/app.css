@@ -55,7 +55,7 @@
             .page-shell {
                 width: 100%;
                 max-width: 1120px;
-                padding: 24px 16px 40px;
+                padding: 16px 12px 24px;
             }
 
             @media (min-width: 960px) {
@@ -520,20 +520,33 @@
             /* --- HOMEPAGE REBRAND STYLES --- */
             .game-iframe-wrapper {
                 width: 100%;
-                height: 75vh;
-                min-height: 550px;
-                margin-bottom: 48px;
+                /* Use aspect ratio fallback to let it be somewhat tall on mobile */
+                aspect-ratio: 9/16;
+                margin: 0 auto 48px auto;
                 border-radius: var(--radius-lg);
                 border: 6px solid var(--wood-dark);
                 overflow: hidden;
                 box-shadow: 0 16px 0 rgba(98, 64, 57, 0.15); /* Chunky drop shadow */
                 background: var(--bg-card-inner);
+                position: relative;
+            }
+
+            @media (min-width: 600px) {
+                .game-iframe-wrapper {
+                     aspect-ratio: unset;
+                     height: 75vh;
+                     min-height: 550px;
+                     max-width: 800px;
+                }
             }
 
             .game-iframe-wrapper iframe {
                 width: 100%;
                 height: 100%;
                 display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
 
             .rebrand-content {
