@@ -11,7 +11,7 @@ html, body {
     width: 100%;
     height: 100%; /* Fixes 100vh mobile iframe issues */
     font-family: 'Fredoka', sans-serif;
-    background: radial-gradient(circle, #82C91E 0%, #5C940D 100%); /* Vibrant grass green */
+    background: #5C940D; /* Fallback green */
     overflow: hidden;
     touch-action: none;
     margin: 0;
@@ -23,6 +23,28 @@ html, body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    z-index: 1;
+}
+
+/* Parallax Background */
+.parallax-bg {
+    position: absolute;
+    /* Overbleed the background by 10% on each side to allow parallax movement without showing edges */
+    top: -10%; left: -10%; 
+    width: 120%; height: 120%;
+    z-index: -1; /* Behind all game content */
+    pointer-events: none;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: blur(6px) brightness(0.85); /* Adds depth of field and contrast */
+    transform: scale(1.05); /* Prevent edges showing when blurred/moving */
 }
 
 /* Header */

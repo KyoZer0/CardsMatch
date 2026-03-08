@@ -11,6 +11,9 @@ export class GameCore {
         this.levelDisplay = document.getElementById('level-display');
         this.scoreDisplay = document.getElementById('score-display');
         
+        // Parallax references
+        this.bgLayerBase = document.querySelector('.parallax-layer-base');
+        
         this.startScreen = document.getElementById('start-screen');
         this.btnPlay = document.getElementById('btn-play');
         
@@ -34,6 +37,9 @@ export class GameCore {
         this.btnPlay.addEventListener('click', () => this.startGame());
         
         window.addEventListener('resize', () => this.centerBoard());
+        window.addEventListener('mousemove', (e) => this.handleParallax(e));
+        
+        this.backgrounds = ['../background/BG1.jpg', '../background/BG2.jpg', '../background/BG3.jpg'];
     }
 
     init() {
@@ -68,6 +74,8 @@ export class GameCore {
         this.selectedTiles = [];
         this.hideModal();
         this.levelDisplay.textContent = this.level;
+        
+        this.updateBackground();
         
         const slots = this.selectionBar.querySelectorAll('.tile');
         slots.forEach(t => t.remove());
@@ -213,6 +221,7 @@ export class GameCore {
 
         tile.state = 'moving';
         this.selectedTiles.push(tile);
+        this.playSelectSfx();
         
         const rect = tile.element.getBoundingClientRect();
         const boardRect = this.boardArea.getBoundingClientRect();
@@ -305,6 +314,7 @@ export class GameCore {
     }
 
     showWinModal() {
+        this.playWinSfx();
         this.modalTitle.textContent = "Level Clear!";
         this.modalTitle.style.color = "#4CAF50";
         this.modalMessage.textContent = `You scored ${this.score} points! Ready for the next challenge?`;
@@ -314,6 +324,7 @@ export class GameCore {
     }
 
     showLoseModal() {
+        this.playLoseSfx();
         this.modalTitle.textContent = "Game Over";
         this.modalTitle.style.color = "#F44336";
         this.modalMessage.textContent = `Your board filled up! Final Score: ${this.score}`;
@@ -334,6 +345,30 @@ export class GameCore {
             // Restart game entirely
             this.startGame();
         }
+    }
+    
+    updateBackground() {
+        // Every 5 levels, the background updates (1-5 = index 0, 6-10 = index 1 ...)
+        if (!this.bgLayerBase) return;
+        
+        let bgIndex = Math.floor((this.level - 1) / 5) % this.backgrounds.length;
+        const targetBg = this.backgrounds[bgIndex];
+        
+        // Only set if different to avoid triggering CSS flicker
+        if (this.bgLayerBase.style.backgroundImage !== `url("${targetBg}")`) {
+            this.bgLayerBase.style.backgroundImage = `url("${targetBg}")`;
+        }
+    }
+    
+    handleParallax(e) {
+        if (!this.bgLayerBase) return;
+        
+        // Increased the parallax movement to 40px for a more pronounced effect
+        const xPos = (e.clientX / window.innerWidth - 0.5) * 40; 
+        const yPos = (e.clientY / window.innerHeight - 0.5) * 40;
+        
+        // Include scale(1.05) to preserve edge overlap
+        this.bgLayerBase.style.transform = `translate(${xPos}px, ${yPos}px) scale(1.05)`;
     }
     
     // VFX & SFX Support Methods
@@ -371,8 +406,6 @@ export class GameCore {
     }
     
     playMatchSfx() {
-        // Implement simple synthetic beep or hook audio elements here.
-        // For now, if no actual audio files exist, we can use a small AudioContext pop.
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if(!AudioContext) return;
@@ -395,5 +428,78 @@ export class GameCore {
         } catch (e) {
             console.log('Audio disabled or unsupported.', e);
         }
+    }
+
+    playSelectSfx() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if(!AudioContext) return;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(400, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
+            
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+            
+            osc.start();
+            osc.stop(ctx.currentTime + 0.05);
+        } catch (e) { }
+    }
+
+    playWinSfx() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if(!AudioContext) return;
+            const ctx = new AudioContext();
+            
+            const freqs = [523.25, 659.25, 783.99, 1046.50]; // C E G C
+            let startTime = ctx.currentTime;
+            
+            freqs.forEach((freq, index) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                
+                gain.gain.setValueAtTime(0.02, startTime + index * 0.1);
+                gain.gain.setTargetAtTime(0, startTime + index * 0.1 + 0.05, 0.02);
+                
+                osc.start(startTime + index * 0.1);
+                osc.stop(startTime + index * 0.1 + 0.2);
+            });
+        } catch (e) { }
+    }
+
+    playLoseSfx() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if(!AudioContext) return;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(300, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.5);
+            
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+            
+            osc.start();
+            osc.stop(ctx.currentTime + 0.5);
+        } catch (e) { }
     }
 }
