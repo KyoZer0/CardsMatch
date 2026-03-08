@@ -62,7 +62,11 @@
     </div>
 
     <!-- We will use Javascript modules to keep the code clean -->
-    <script type="module" src="js/main.js"></script>
+    <script type="module">
+        // Cache bust using current timestamp to force redownload
+        const version = new Date().getTime();
+        import(`./js/main.js?v=${version}`);
+    </script>
 </body>
 
 </html>

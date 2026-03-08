@@ -92,14 +92,111 @@ export class GameCore {
         this.scoreDisplay.textContent = this.score;
     }
 
+    generateProceduralLayout(totalTiles) {
+        let slots = [];
+        let tilesPlaced = 0;
+        
+        const shapes = [
+            // Center lock (5 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, 
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, 
+                {dx: 0.5, dy: 0.5, dz: 1}
+            ],
+            // Staircase (6 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
+                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 1.5, dy: 0.5, dz: 1},
+                {dx: 1, dy: 1, dz: 2}
+            ],
+            // Pyramid (14 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0},
+                {dx: 0, dy: 2, dz: 0}, {dx: 1, dy: 2, dz: 0}, {dx: 2, dy: 2, dz: 0},
+                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 1.5, dy: 0.5, dz: 1},
+                {dx: 0.5, dy: 1.5, dz: 1}, {dx: 1.5, dy: 1.5, dz: 1},
+                {dx: 1, dy: 1, dz: 2}
+            ],
+            // Twin Peak (10 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 3, dy: 0, dz: 0}, {dx: 4, dy: 0, dz: 0},
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 3, dy: 1, dz: 0}, {dx: 4, dy: 1, dz: 0},
+                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 3.5, dy: 0.5, dz: 1}
+            ],
+            // Flat block (4 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0},
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}
+            ],
+            // Rectangle (6 tiles)
+            [
+                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0}
+            ],
+            // Cross (5 tiles)
+            [
+                              {dx: 1, dy: 0, dz: 0},
+                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0},
+                              {dx: 1, dy: 2, dz: 0}
+            ]
+        ];
+
+        let cols = 8;
+        let rows = 8;
+        
+        while (tilesPlaced < totalTiles) {
+            let remaining = totalTiles - tilesPlaced;
+            let validShapes = shapes.filter(s => s.length <= remaining);
+            let shape;
+            if (validShapes.length > 0) {
+                shape = validShapes[Math.floor(Math.random() * validShapes.length)];
+            } else {
+                shape = [{dx: 0, dy: 0, dz: 0}];
+            }
+            
+            let ox = Math.floor(Math.random() * cols); 
+            let oy = Math.floor(Math.random() * rows);
+            
+            let maxZ = -1;
+            let overlaps = false;
+            
+            for (let part of shape) {
+                let px = ox + part.dx;
+                let py = oy + part.dy;
+                slots.forEach(s => {
+                    // Check bounding overlap slightly smaller than 1x1 to allow adjacent
+                    if (px < s.x + 0.9 && px + 0.9 > s.x && py < s.y + 0.9 && py + 0.9 > s.y) {
+                        overlaps = true;
+                        maxZ = Math.max(maxZ, s.z);
+                    }
+                });
+            }
+            
+            let baseZ = overlaps ? maxZ + 1 : 0;
+            
+            shape.forEach(part => {
+                slots.push({
+                    x: ox + part.dx,
+                    y: oy + part.dy,
+                    z: baseZ + part.dz
+               });
+            });
+            
+            tilesPlaced += shape.length;
+        }
+        
+        return slots;
+    }
+
     generateLevelData() {
         let idCounter = 0;
         
         // Scaling difficulty
-        // Level 1: 1 icon type, 2 triplets (6 tiles) -> Very Easy
-        // Add 1 new icon type per level. Increase triplets naturally.
-        const typesCount = Math.min(this.masterIconPool.length, this.level);
-        const numTriplets = typesCount + Math.floor(this.level * 1.5); 
+        // Let's use 3 base types and grow
+        const typesCount = Math.min(this.masterIconPool.length, 3 + Math.floor(this.level / 2));
+        const numTriplets = 4 + Math.floor(this.level * 1.5); 
+        const totalTiles = numTriplets * 3;
         
         // Pick exactly `typesCount` unique icons for this level
         const currentIcons = [...this.masterIconPool].sort(() => 0.5 - Math.random()).slice(0, typesCount);
@@ -113,46 +210,40 @@ export class GameCore {
         
         pool.sort(() => Math.random() - 0.5);
 
-        // Keep grid tight, but bounded safely within the 800px iframe width.
-        // 800px / 60px tile = ~13 cols. We'll limit to 11 to give safe padding margins on the edges.
-        const maxCols = 11;
-        const maxRows = 10;
-        const cols = Math.min(maxCols, 3 + Math.floor(numTriplets / 3));
-        const rows = Math.min(maxRows, 3 + Math.floor(numTriplets / 3));
+        let layout = this.generateProceduralLayout(totalTiles);
 
-        pool.forEach(type => {
-            // Half-steps allow tiles to securely overlap while peeking their edges out
-            const randomX = Math.floor(Math.random() * (cols * 2)) / 2;
-            const randomY = Math.floor(Math.random() * (rows * 2)) / 2;
-            
-            let highestZ = 0;
-            this.tiles.forEach(t => {
-                // If centers are roughly closer than 0.8, they overlap enough to count as blocking
-                if (Math.abs(t.x - randomX) <= 0.8 && Math.abs(t.y - randomY) <= 0.8) {
-                    highestZ = Math.max(highestZ, t.z + 1);
-                }
-            });
-
-            this.tiles.push(new Tile(idCounter++, type, randomX, randomY, highestZ));
+        this.tiles = layout.map((slot, i) => {
+            return new Tile(idCounter++, pool[i], slot.x, slot.y, slot.z);
         });
     }
 
     // ... (keep the rest of the file exactly the same from calculateBlockages onwards, except win/loss updates)
 
+    isBlocking(lower, upper) {
+        if (upper.z <= lower.z) return false;
+
+        const lowerCenterX = lower.x + 0.5;
+        const lowerCenterY = lower.y + 0.5;
+
+        // The upper tile blocks the lower tile if the lower tile's center 
+        // is covered by the upper tile's footprint.
+        return (
+            lowerCenterX >= upper.x &&
+            lowerCenterX <= upper.x + 1 &&
+            lowerCenterY >= upper.y &&
+            lowerCenterY <= upper.y + 1
+        );
+    }
+
     calculateBlockages() {
         this.tiles.forEach(t => t.blockedBy = []);
 
         for (let i = 0; i < this.tiles.length; i++) {
-            const t1 = this.tiles[i];
+            const lower = this.tiles[i];
             for (let j = 0; j < this.tiles.length; j++) {
-                const t2 = this.tiles[j];
-                if (t2.z > t1.z) {
-                    const dx = t1.x - t2.x;
-                    const dy = t1.y - t2.y;
-                    const distanceSq = (dx * dx) + (dy * dy);
-                    if (distanceSq < 0.8) {
-                        t1.blockedBy.push(t2);
-                    }
+                const upper = this.tiles[j];
+                if (this.isBlocking(lower, upper)) {
+                    lower.blockedBy.push(upper);
                 }
             }
         }
