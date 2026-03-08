@@ -79,8 +79,8 @@ html, body {
 
 /* Tiles (Cards) */
 .tile {
-    width: 60px;
-    height: 60px;
+    width: clamp(40px, 12vw, 60px);
+    height: clamp(40px, 12vw, 60px);
     position: absolute;
     background-color: #FFFFFF; /* Bright white top */
     border-radius: 12px; /* Smooth square */
@@ -92,7 +92,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 34px;
+    font-size: clamp(28px, 8vw, 34px);
     cursor: pointer;
     transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease, top 0.3s ease, left 0.3s ease;
     transform-origin: center bottom;
@@ -127,7 +127,7 @@ html, body {
 #selection-bar {
     width: 100%;
     max-width: 500px;
-    height: 90px;
+    height: clamp(65px, 18vw, 90px);
     background-color: #8C5A35; /* Wood/leather brown tray matching ref */
     border-radius: 16px;
     border: 3px solid #633C1F;
@@ -135,15 +135,15 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 0 15px;
+    gap: clamp(2px, 1.5vw, 8px);
+    padding: 0 clamp(5px, 3vw, 15px);
     padding-top: 6px; /* Offset for inset shadow */
     position: relative;
 }
 
 .slot {
-    width: 60px;
-    height: 60px;
+    width: clamp(40px, 12vw, 60px);
+    height: clamp(40px, 12vw, 60px);
     background-color: #EAE3D2; /* Slightly darker cream for empty slot */
     border-radius: 12px;
     border: 2px dashed #C4B9AA;
@@ -307,5 +307,27 @@ html, body {
     100% {
         transform: translate(var(--tx), var(--ty)) scale(0) rotate(180deg);
         opacity: 0;
+    }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .game-title {
+        font-size: 3.5rem;
+    }
+    .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+    #game-header {
+        font-size: 1.2rem;
+        padding: 10px 15px;
+    }
+    .level-info, .score-info {
+        padding: 4px 12px;
+    }
+    #btn-play, #modal-action-btn {
+        padding: 12px 35px;
+        font-size: 1.4rem;
     }
 }

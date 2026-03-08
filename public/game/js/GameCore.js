@@ -67,7 +67,7 @@ export class GameCore {
         this.boardInner.style.width = '100%';
         this.boardInner.style.height = '100%';
         this.boardInner.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-        this.boardInner.style.transformOrigin = 'center';
+        this.boardInner.style.transformOrigin = 'top left';
         this.boardArea.appendChild(this.boardInner);
 
         this.tiles = [];
@@ -99,51 +99,48 @@ export class GameCore {
         const shapes = [
             // Center lock (5 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, 
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, 
-                {dx: 0.5, dy: 0.5, dz: 1}
+                {dx: -0.5, dy: -0.5, dz: 0}, {dx: 0.5, dy: -0.5, dz: 0}, 
+                {dx: -0.5, dy: 0.5, dz: 0}, {dx: 0.5, dy: 0.5, dz: 0}, 
+                {dx: 0, dy: 0, dz: 1}
             ],
             // Staircase (6 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
-                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 1.5, dy: 0.5, dz: 1},
-                {dx: 1, dy: 1, dz: 2}
+                {dx: -1, dy: -0.5, dz: 0}, {dx: 0, dy: -0.5, dz: 0}, {dx: 1, dy: -0.5, dz: 0},
+                {dx: -0.5, dy: 0, dz: 1}, {dx: 0.5, dy: 0, dz: 1},
+                {dx: 0, dy: 0.5, dz: 2}
             ],
             // Pyramid (14 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0},
-                {dx: 0, dy: 2, dz: 0}, {dx: 1, dy: 2, dz: 0}, {dx: 2, dy: 2, dz: 0},
-                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 1.5, dy: 0.5, dz: 1},
-                {dx: 0.5, dy: 1.5, dz: 1}, {dx: 1.5, dy: 1.5, dz: 1},
-                {dx: 1, dy: 1, dz: 2}
+                {dx: -1, dy: -1, dz: 0}, {dx: 0, dy: -1, dz: 0}, {dx: 1, dy: -1, dz: 0},
+                {dx: -1, dy: 0, dz: 0}, {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0},
+                {dx: -1, dy: 1, dz: 0}, {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0},
+                {dx: -0.5, dy: -0.5, dz: 1}, {dx: 0.5, dy: -0.5, dz: 1},
+                {dx: -0.5, dy: 0.5, dz: 1}, {dx: 0.5, dy: 0.5, dz: 1},
+                {dx: 0, dy: 0, dz: 2}
             ],
             // Twin Peak (10 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 3, dy: 0, dz: 0}, {dx: 4, dy: 0, dz: 0},
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 3, dy: 1, dz: 0}, {dx: 4, dy: 1, dz: 0},
-                {dx: 0.5, dy: 0.5, dz: 1}, {dx: 3.5, dy: 0.5, dz: 1}
+                {dx: -2, dy: -0.5, dz: 0}, {dx: -1, dy: -0.5, dz: 0}, {dx: 1, dy: -0.5, dz: 0}, {dx: 2, dy: -0.5, dz: 0},
+                {dx: -2, dy: 0.5, dz: 0}, {dx: -1, dy: 0.5, dz: 0}, {dx: 1, dy: 0.5, dz: 0}, {dx: 2, dy: 0.5, dz: 0},
+                {dx: -1.5, dy: 0, dz: 1}, {dx: 1.5, dy: 0, dz: 1}
             ],
             // Flat block (4 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0},
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}
+                {dx: -0.5, dy: -0.5, dz: 0}, {dx: 0.5, dy: -0.5, dz: 0},
+                {dx: -0.5, dy: 0.5, dz: 0}, {dx: 0.5, dy: 0.5, dz: 0}
             ],
             // Rectangle (6 tiles)
             [
-                {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0}, {dx: 2, dy: 0, dz: 0},
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0}
+                {dx: -1, dy: -0.5, dz: 0}, {dx: 0, dy: -0.5, dz: 0}, {dx: 1, dy: -0.5, dz: 0},
+                {dx: -1, dy: 0.5, dz: 0}, {dx: 0, dy: 0.5, dz: 0}, {dx: 1, dy: 0.5, dz: 0}
             ],
             // Cross (5 tiles)
             [
-                              {dx: 1, dy: 0, dz: 0},
-                {dx: 0, dy: 1, dz: 0}, {dx: 1, dy: 1, dz: 0}, {dx: 2, dy: 1, dz: 0},
-                              {dx: 1, dy: 2, dz: 0}
+                              {dx: 0, dy: -1, dz: 0},
+                {dx: -1, dy: 0, dz: 0}, {dx: 0, dy: 0, dz: 0}, {dx: 1, dy: 0, dz: 0},
+                              {dx: 0, dy: 1, dz: 0}
             ]
         ];
-
-        let cols = 8;
-        let rows = 8;
         
         while (tilesPlaced < totalTiles) {
             let remaining = totalTiles - tilesPlaced;
@@ -155,8 +152,9 @@ export class GameCore {
                 shape = [{dx: 0, dy: 0, dz: 0}];
             }
             
-            let ox = Math.floor(Math.random() * cols); 
-            let oy = Math.floor(Math.random() * rows);
+            // Introduce slight offsets to stack into a tall central tower organically
+            let ox = (Math.random() < 0.5 ? 0 : 0.5) * (Math.random() < 0.5 ? 1 : -1);
+            let oy = (Math.random() < 0.5 ? 0 : 0.5) * (Math.random() < 0.5 ? 1 : -1);
             
             let maxZ = -1;
             let overlaps = false;
@@ -251,9 +249,21 @@ export class GameCore {
         this.tiles.forEach(t => t.updateAppearance());
     }
 
+    updateMetrics() {
+        const testSlot = document.querySelector('.slot');
+        if (testSlot && testSlot.offsetWidth > 0) {
+            this.tileSize = testSlot.offsetWidth;
+            this.tileZOffset = this.tileSize / 6; // Proportional Z-shift (e.g. 10px for 60px tile)
+        } else {
+            this.tileSize = 60;
+            this.tileZOffset = 10;
+        }
+    }
+
     centerBoard() {
         if (this.tiles.length === 0) return;
         
+        this.updateMetrics();
         let minX = Infinity, maxX = -Infinity;
         let minY = Infinity, maxY = -Infinity;
 
@@ -268,16 +278,15 @@ export class GameCore {
 
         if (minX === Infinity) return;
 
-        const logicalWidth = ((maxX - minX) + 1) * 60;
-        const logicalHeight = ((maxY - minY) + 1) * 60;
+        const logicalWidth = ((maxX - minX) + 1) * this.tileSize;
+        const logicalHeight = ((maxY - minY) + 1) * this.tileSize;
         
         const boardWidth = this.boardArea.offsetWidth;
         const boardHeight = this.boardArea.offsetHeight;
         
         // Calculate max scale based on how deep the layers go to keep them from clipping out.
-        // Assuming every Z level shifts elements up by 10px.
         const maxZ = this.tiles.reduce((max, t) => t.state === 'board' ? Math.max(max, t.z) : max, 0);
-        const extraVerticalSpace = maxZ * 10;
+        const extraVerticalSpace = maxZ * this.tileZOffset;
         
         const totalHeightNeeded = logicalHeight + extraVerticalSpace;
         
@@ -292,17 +301,17 @@ export class GameCore {
         }
         
         // Since we scale the container, offsets need not to be scaled manually.
-        const offsetX = (boardWidth / targetScale - logicalWidth) / 2 - (minX * 60);
-        const offsetY = ((boardHeight / targetScale - totalHeightNeeded) / 2) + extraVerticalSpace - (minY * 60);
+        const offsetX = (boardWidth / targetScale - logicalWidth) / 2 - (minX * this.tileSize);
+        const offsetY = ((boardHeight / targetScale - totalHeightNeeded) / 2) + extraVerticalSpace - (minY * this.tileSize);
 
         this.tiles.forEach(t => {
             if (t.state === 'board') {
-                const leftPos = (t.x * 60) + offsetX;
-                const topPos = (t.y * 60) + offsetY;
+                const leftPos = (t.x * this.tileSize) + offsetX;
+                const topPos = (t.y * this.tileSize) + offsetY;
                 
-                // Stack offset to account for the physical 6px bottom edge in our CSS
+                // Stack offset to account for the physical bottom edge in our CSS
                 t.element.style.left = `${leftPos}px`;
-                t.element.style.top = `${topPos - (t.z * 10)}px`;
+                t.element.style.top = `${topPos - (t.z * this.tileZOffset)}px`;
             }
         });
     }
