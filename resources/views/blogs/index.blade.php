@@ -35,9 +35,12 @@
                 <p style="font-size: 1rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 24px; flex: 1;">
                     {{ $post['excerpt'] }}
                 </p>
-                <div style="font-size: 0.85rem; font-weight: 900; color: var(--wood-dark); border-top: 3px dashed var(--wood-light); padding-top: 16px;">
+                <div style="font-size: 0.85rem; font-weight: 900; color: var(--wood-dark); border-top: 3px dashed var(--wood-light); padding-top: 16px; display: flex; flex-wrap: wrap; gap: 16px;">
+                    @if(isset($post['author']))
+                        <span>👤 {{ $post['author'] }}</span>
+                    @endif
                     <span>📅 {{ \Illuminate\Support\Carbon::parse($post['published_at'])->toFormattedDateString() }}</span>
-                    <span style="margin-left: 16px;">⏱ {{ $post['reading_time'] }}</span>
+                    <span>⏱ {{ $post['reading_time'] }}</span>
                 </div>
             </div>
             @endforeach

@@ -13,7 +13,12 @@
             <h1 class="rebrand-title" style="margin-bottom: 16px;">
                 {{ $post['title'] }}
             </h1>
-            <div style="font-size: 0.95rem; font-weight: 900; color: var(--wood-dark); display: flex; justify-content: center; gap: 16px;">
+            <div style="font-size: 0.95rem; font-weight: 900; color: var(--wood-dark); display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;">
+                @if(isset($post['author']))
+                    <span style="background: var(--bg-card-inner); padding: 4px 12px; border-radius: 999px; border: 2px solid var(--wood-dark);">
+                        {{ $post['author_image'] ?? '👤' }} {{ $post['author'] }}
+                    </span>
+                @endif
                 <span style="background: var(--bg-card-inner); padding: 4px 12px; border-radius: 999px; border: 2px solid var(--wood-dark);">
                     📅 {{ \Illuminate\Support\Carbon::parse($post['published_at'])->toFormattedDateString() }}
                 </span>
@@ -31,6 +36,20 @@
             <div class="blog-body" style="font-size: 1.05rem; color: var(--text-main); line-height: 1.8; font-weight: 600;">
                 {!! $post['body'] !!}
             </div>
+            
+            @if(isset($post['author_bio']))
+            <div style="margin-top: 48px; padding-top: 32px; border-top: 4px solid var(--wood-light); display: flex; gap: 24px; align-items: flex-start;">
+                <div style="font-size: 3rem; background: var(--wood-light); border: 3px solid var(--wood-dark); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    {{ $post['author_image'] ?? '👤' }}
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 8px 0; font-size: 1.25rem; color: var(--wood-dark); font-weight: 900;">About {{ $post['author'] ?? 'the Author' }}</h3>
+                    <p style="margin: 0; font-size: 0.95rem; color: var(--text-soft); line-height: 1.6;">
+                        {{ $post['author_bio'] }}
+                    </p>
+                </div>
+            </div>
+            @endif
         </div>
 
         <div style="text-align: center; margin-top: 24px;">
